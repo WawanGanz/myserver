@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info Server Minecraft</title>
+    <style>
+        :root {
+            --bg: #272727;
+            --card: #c2c2c24f;
+            --java-color: #3586ff;
+            --bedrock-color: #00ff4c;
+            --text: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg) url('https://i.ibb.co.com/jPht6jMP/Screenshot-2026-03-16-160554.png') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-top: 5px solid;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+        .java { border-color: var(--java-color); }
+        .bedrock { border-color: var(--bedrock-color); }
+
+        h2 { margin-top: 0; font-size: 1.5rem; }
+        .java h2 { color: var(--java-color); }
+        .bedrock h2 { color: var(--bedrock-color); }
+
+        .info-row {
+            background: rgba(51, 51, 51, 0.63);
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .value { font-family: 'Segoe UI', sans-serif; font-weight: bold; font-size: 1.1rem; }
+
+        .btn-copy {
+            margin-top: 15px;
+            background: #44444450;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-copy:hover { background: #444; }
+        .java .btn-copy:active { background: var(--java-color); color: black; }
+        .bedrock .btn-copy:active { background: var(--bedrock-color); color: black; }
+
+        /* Notifikasi Salin */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            font-size: 14px;
+        }
+
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        h1 {
+            animation: swipeUp 1s ease-out;
+        }
+
+        @keyframes swipeUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="margin-bottom: 30px; text-shadow: 2px 2px #000;">Join Happy Games Smp</h1>
+
+    <div class="container">
+        <div class="card java">
+            <h2>Minecraft Java</h2>
+            <div class="info-row">
+                <span class="label">Server IP</span>
+                <span class="value" id="java-ip">play.happygmc.my.id</span>
+            </div>
+            <button class="btn-copy" onclick="copyText('java-ip')">SALIN IP JAVA</button>
+        </div>
+
+        <div class="card bedrock">
+            <h2>Minecraft Bedrock</h2>
+            <div class="info-row">
+                <span class="label">Server IP / Address</span>
+                <span class="value" id="be-ip">play.happygmc.my.id</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Port</span>
+                <span class="value" id="be-port">19183</span>
+            </div>
+            <button class="btn-copy" onclick="copyText('be-ip')">SALIN IP</button>
+            <button class="btn-copy" onclick="copyText('be-port')" style="margin-top: 5px;">SALIN PORT</button>
+        </div>
+    </div>
+
+    <div id="toast">Berhasil disalin!</div>
+
+    <script>
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`"${text}" disalin ke clipboard!`);
+            }).catch(() => {
+                showToast("Gagal menyalin. Browser tidak mendukung atau perlu HTTPS.");
+            });
+        }
+
+        function showToast(msg) {
+            const x = document.getElementById("toast");
+            x.innerText = msg;
+            x.className = "show";
+            setTimeout(function(){ x.classList.remove("show"); }, 3000);
+        }
+    </script>
+
+</body>
+</html>
