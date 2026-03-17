@@ -285,25 +285,23 @@
         </div>
     </div>
 
-    <div id="toast">Berhasil disalin!</div>
+    <div id="toast"></div>
 
-    <script>
-        function copyText(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`"${text}" disalin ke clipboard!`);
-            }).catch(() => {
-                showToast("Gagal menyalin. Browser tidak mendukung atau perlu HTTPS.");
-            });
-        }
+<script>
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        showToast("✓ " + text + " Disalin!");
+    });
+}
 
-        function showToast(msg) {
-            const x = document.getElementById("toast");
-            x.innerText = msg;
-            x.classList.add("show");
-            setTimeout(function(){ x.classList.remove("show"); }, 3000);
-        }
-    </script>
+function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.innerText = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2500);
+}
+</script>
 <footer>
     <p>&copy; 2026 Wawan.happygmc. All rights reserved.</p>
     <ul>
